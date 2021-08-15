@@ -1,0 +1,7 @@
+create table user_user(
+	id serial primary key,
+	login varchar unique not null,
+	password varchar not null,
+	email varchar unique not null,
+	gender varchar not null
+);
