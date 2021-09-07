@@ -1,0 +1,12 @@
+create table users(
+    id serial primary key,
+    name varchar unique not null
+);
+
+
+
+create table task(
+    id serial primary key,
+    name varchar not null,
+    user_id integer references users(id)
+);

@@ -1,0 +1,44 @@
+package org.example.service;
+
+import org.example.dao.UserDao;
+import org.example.dao.daoImpl.UserDaoImpl;
+import org.example.model.UserModel;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+@Path("/user")
+public class UserService {
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response save(UserModel userModel){
+        UserDao userDao = new UserDaoImpl();
+        userDao.save(userModel);
+        //EXAMPLE
+        //Метод может возвращать просто Модельку (Java Class)
+        //Или может возвращать Response -> класс который пришел к нам от Jax rs, пример ниже
+        return Response.ok()
+                .entity("УСпешно сохранено")
+                .build();
+    }
+
+    @GET
+    @Path("/{id}")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response getById(@PathParam("id") Long id){
+        UserDao userDao = new UserDaoImpl();
+        return Response.ok()
+                .entity(userDao.findById(id))
+                .build();
+    }
+
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getAll(){
+        UserDao userDao = new UserDaoImpl();
+        return Response.ok()
+                .entity(userDao.findAll())
+                .build();
+    }
+}
